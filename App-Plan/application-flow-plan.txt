@@ -1,0 +1,99 @@
+Application flow Sample, for identifying flow of data, flow of user intercations and identify the initial state properties.
+
+click "Num(8)" ->
+func = none
+prevNum = 0
+num = 8
+sod = 8
+nextNum = false
+his = []
+completeHis = []
+
+Click "Func(Add)" ->
+if (func !== "none"): Calc()
+func = add
+prevNum = 8
+num = 0
+sod = +
+nextNum = true
+his = ["8"]
+completeHis = []
+
+Click "Num(9)" ->
+func = add
+prevNum = 8
+num = 9
+sod = 9
+nextNum = false
+his = ["8", "+"]
+completeHis = []
+
+Click "Func(Sub)" ->
+if (func !== "none"): Calc()
+func = sub
+prevNum = 17
+num = 0
+sod = -
+nextNum = true
+his = ["8", "+", "9"]
+completeHis = []
+
+Click "Num(2)"
+func = sub
+prevNum = 17
+num = 2
+sod = 2
+nextNum = false
+his = ["8", "+", "9", "-"]
+completeHis = []
+
+Click "Clear("CE") ->
+func = sub
+prevNum = 17
+num = 0
+sod = 0
+his = ["8", "+", "9", "-"]
+completeHis = []
+
+Click "Num(7)"
+func = sub
+prevNum = 17
+num = 7
+sod = 7
+nextNum = false
+his = ["8", "+", "9", "-"]
+completeHis = []
+
+Click "Func(Mutli)" ->
+if (func !== "none"): Calc()
+func = multi
+prevNum = 10
+num = 0
+sod = x
+his = ["8", "+", "9", "-", "7"]
+completeHis = []
+
+Click "Num(4)"
+func = multi
+prevNum = 10
+num = 4
+sod = 4
+his = ["8", "+", "9", "-", "7", "x"]
+completeHis = []
+
+Click "Func(Equal)" ->
+if (func !== "none"): Calc()
+func = none
+prevNum = 40
+num = 40
+sod = 40
+his = ["8", "+", "9", "-", "7", "x", "4", "=", "40"]
+CompleteHis = [["8", "+", "9", "-", "7", "x", "4", "=", "40"]]
+
+Click "Clear("AC") ->
+func = none
+prevNum = 0
+num = 0
+sod = 0
+his = ["0"]
+CompleteHis = [["8", "+", "9", "-", "7", "x", "4", "=", "40"]]
