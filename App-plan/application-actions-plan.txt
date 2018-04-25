@@ -1,0 +1,89 @@
+add number to the calc: addNumToCalc
+
+add operator to calc: AddOpToCalc
+
+add a dot symbol: addDotSymb
+
+clear last input: clearLastInput
+
+clear current calculation: clearCurrentCalc
+
+calculate result: calcResult
+
+updatePrevNum
+
+
+------------------------------------------
+
+
+addNumToCalc(numberClicked) ->
+
+    (numberClicked === "0") 
+        true->
+
+        (state.sod === "0") 
+            true ->
+                do nothing
+            
+            false ->
+                set state.num = state.num + numberClicked
+                set state.sod = state.num
+                        
+                        
+        false ->
+            set state.num = state.num + numberClicked
+            set state.sod = state.num 
+            
+------------------------------------------
+
+
+addOpToCalc(operator) ->
+
+    if (state.sod is a number) 
+        true->
+
+            if (calcOpSelected !== "none") ->
+                        true ->
+                            updatePrevNum()
+                            
+                        false ->
+                            state.prevNum = state.num
+                            
+            setSymbOnDis(operator, "operator")
+            state.calcOpSelected = operator
+            set currentHis = [...state.currentHis, prevNum]
+            set state.num = ""
+            set state.dotPresentInNum = false
+            
+        false->
+            
+            setSymbOnDis(operator, "operator")
+            state.calcOpSelected = operator
+    
+------------------------------------------
+
+updatePrevNum() ->
+
+    if (calcOpSelected !== "none") ->
+    
+        switch(calcOpSelected) -> 
+        
+            case "operator":
+                // replace operator with condition for "add", "sub" etc.
+                state.prevNum = state.prevNum (operator) state.num
+                
+------------------------------------------
+
+addDotSymb() ->
+
+    if state.dotPresentInNum !== true
+        true ->
+            set state.num = state.num + "."
+            set state.sod = state.num
+            set state.dotPresentInNum = true
+            
+------------------------------------------
+
+        
+        
+                 
