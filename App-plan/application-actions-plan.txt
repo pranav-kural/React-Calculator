@@ -21,25 +21,25 @@ addNumToCalc(numberClicked) ->
     (numberClicked === "0") 
         true->
 
-        (state.sod === "0") 
+        (state.symbOnDis === "0") 
             true ->
                 do nothing
             
             false ->
                 set state.num = state.num + numberClicked
-                set state.sod = state.num
+                set state.symbOnDis = state.num
                         
                         
         false ->
             set state.num = state.num + numberClicked
-            set state.sod = state.num 
+            set state.symbOnDis = state.num 
             
 ------------------------------------------
 
 
 addOpToCalc(operator) ->
 
-    if (state.sod is a number) 
+    if (state.symbOnDis is a number) 
         true->
 
             if (calcOpSelected !== "none") ->
@@ -79,11 +79,34 @@ addDotSymb() ->
     if state.dotPresentInNum !== true
         true ->
             set state.num = state.num + "."
-            set state.sod = state.num
+            set state.symbOnDis = state.num
             set state.dotPresentInNum = true
             
 ------------------------------------------
 
-        
-        
-                 
+clearLastInput() ->
+
+    if state.symbOnDis === num
+        true ->
+            state.num.pop()
+            if (state.num.length > 0) 
+                true ->
+                    state.symbOnDis = state.num
+                fasle ->
+                    charToSet = state.currentHis.pop()
+                    state.symbOnDis = (charToSet === "") ? "0" ? charToSet;
+                    
+        fasle ->
+            state.num = state.currentHis.pop()
+            state.symbOnDis = state.num
+
+------------------------------------------         
+            
+clearCurrentCalc() - 
+
+    state.currentHis = [""]
+    state.num = [""], state.symbOnDis = ["0"]
+    state.prevNum = [""]
+    state.dotPresentInNum = false
+    
+------------------------------------------
