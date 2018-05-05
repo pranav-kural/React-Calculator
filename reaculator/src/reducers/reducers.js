@@ -8,11 +8,11 @@ const calcOpSelected = (state="none", action) =>
 
 const prevNum = (state=null, action) =>
     (action.type === Action.CALC_PREVIOUS_RESULT) ?
-        parseFloat(action.payload) : state;
+        action.payload : state;
 
 const num = (state=null, action) =>
     (action.type === Action.ADD_NUM_TO_CALC) ?
-        parseFloat(action.payload) : state;
+        action.payload : state;
 
 const symbOnDis = (state="", action) =>
     (action.type === Action.ADD_NUM_TO_CALC) ?
