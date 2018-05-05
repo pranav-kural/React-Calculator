@@ -1,15 +1,16 @@
 import React from 'react'
+import { combineReducers } from 'redux'
 import Action from '../Actions/Constants'
 
 const calcOpSelected = (state="none", action) =>
     (action.type === Action.ADD_OPERATOR_TO_CALC) ?
         action.payload : state;
 
-const prevNum = (state=0, action) =>
+const prevNum = (state=null, action) =>
     (action.type === Action.CALC_PREVIOUS_RESULT) ?
         parseFloat(action.payload) : state;
 
-const num = (state=0, action) =>
+const num = (state=null, action) =>
     (action.type === Action.ADD_NUM_TO_CALC) ?
         parseFloat(action.payload) : state;
 
@@ -17,8 +18,8 @@ const symbOnDis = (state="", action) =>
     (action.type === Action.ADD_NUM_TO_CALC) ?
         action.payload : state;
 
-const nextIsNum = (state=true, action) =>
-    (action.type === Action.SET_NEXT_INPUT_TYPE_TO_NUM) ?
+const dotPresentInNum = (state=false, action) =>
+    (action.type === Action.SET_DOT_IN_NUM) ?
         action.payload : state;
 
 const currentHis = (state=[], action) => {
@@ -51,3 +52,12 @@ const completeHis = (state=[], action) =>
     (action.type === Action.ADD_TO_COMPLETE_HISTORY) ?
         Array(...state.completeHis, action.payload) : state;
 
+export default combineReducers({
+    calcOpSelected,
+    prevNum,
+    num,
+    symbOnDis,
+    dotPresentInNum,
+    currentHis,
+    completeHis
+})
