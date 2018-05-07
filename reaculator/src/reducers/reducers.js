@@ -11,12 +11,10 @@ const prevNum = (state=null, action) =>
 
 const num = (state=[], action) => {
     switch (action.type) {
-        case Action.ADD_NUM_TO_CALC:
+        case Action.SET_NUM:
             return action.payload
-        case Action.REMOVE_NUM_FROM_CALC:
-            let newNum = [...state.num];
-            newNum.pop();
-            return newNum;
+        case Action.CLEAR_NUM:
+            return []
         default:
             return state
     }
