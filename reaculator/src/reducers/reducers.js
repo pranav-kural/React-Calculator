@@ -38,7 +38,7 @@ const currentHis = (state=[], action) => {
         case Action.ADD_TO_CURRENT_HISTORY :
             return Array(...state.currentHis, action.payload);
 
-        case Action.CLEAR_LAST_INPUT :
+        case Action.REMOVE_LAST_FROM_CURRENT_HISTORY :
             let currentHis = [...state.currentHis];
 
             if (currentHis !== []) {
@@ -59,7 +59,7 @@ const currentHis = (state=[], action) => {
 
 const completeHis = (state=[], action) =>
     (action.type === Action.ADD_TO_COMPLETE_HISTORY) ?
-        Array(...state.completeHis, action.payload) : state;
+        Array(...state.completeHis, state.currentHis) : state;
 
 export default combineReducers({
     calcOpSelected,
