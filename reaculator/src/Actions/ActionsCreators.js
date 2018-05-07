@@ -67,4 +67,17 @@ const setDotPresentInNum = (dotPresentInNum=false) => {
 const setSymbOnDis = (symbol="") => ({
     type: ACTIONS.SET_SYMBOL_ON_DISPLAY,
     payload: symbol
-})
+}) // setSymbOnDis
+
+const addToCurrentHis = (expression="") => ({
+    type: ACTIONS.ADD_TO_CURRENT_HISTORY,
+    payload: expression
+}) // addToCurrentHis
+
+const updateCompleteHis = () => ({
+    type: ACTIONS.UPDATE_TO_COMPLETE_HISTORY
+}) // updateCompleteHis
+
+const removeLastFromCurrentHis = () => ({
+    type: ACTIONS.REMOVE_LAST_FROM_CURRENT_HISTORY
+}) // removeLastFromCurrentHis
