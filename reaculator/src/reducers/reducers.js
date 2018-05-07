@@ -1,4 +1,3 @@
-import React from 'react'
 import { combineReducers } from 'redux'
 import Action from '../Actions/Constants'
 
@@ -10,16 +9,16 @@ const prevNum = (state=null, action) =>
     (action.type === Action.CALC_PREVIOUS_RESULT) ?
         action.payload : state;
 
-const num = (state=null, action) => {
+const num = (state=[], action) => {
     switch (action.type) {
         case Action.ADD_NUM_TO_CALC:
             return action.payload
         case Action.REMOVE_NUM_FROM_CALC:
-            let newNum = state.num;
+            let newNum = [...state.num];
             newNum.pop();
             return newNum;
         default:
-            state
+            return state
     }
 }
 
@@ -36,7 +35,7 @@ const currentHis = (state=[], action) => {
     switch (action.type) {
 
         case Action.ADD_TO_CURRENT_HISTORY :
-            return Array(...state.currentHis, action.payload);
+            return [...state.currentHis, action.payload];
 
         case Action.REMOVE_LAST_FROM_CURRENT_HISTORY :
             let currentHis = [...state.currentHis];
@@ -59,7 +58,7 @@ const currentHis = (state=[], action) => {
 
 const completeHis = (state=[], action) =>
     (action.type === Action.ADD_TO_COMPLETE_HISTORY) ?
-        Array(...state.completeHis, state.currentHis) : state;
+        [...state.completeHis, state.currentHis] : state;
 
 export default combineReducers({
     calcOpSelected,

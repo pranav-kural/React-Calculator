@@ -3,17 +3,28 @@ import ACTIONS from './Constants.js'
  * Action creators
  */
  
-const addNumToCalc = (numberClicked=0) => {
+export const addNumToCalc = (numberClicked="") => (dispatch, getState) => {
     
     // convert the string to a positive number
     let numToAdd = Math.abs(parseFloat(numberClicked));
     
     // if numToAdd is a valid number
     if (numToAdd || numToAdd === 0) {
-        return {
-            type: ACTIONS.ADD_NUM_TO_CALC,
-            payload: numToAdd
+
+        if (numToAdd === 0 && getState().symbonDis === "0") {
+            return {}; // essentially, do nothing
+        } else {
+
+            // dispatch action to set num
+            dispatch({
+                type: ACTIONS.ADD_NUM_TO_CALC,
+                payload: [...getState().num, numberClicked]
+            })
+
+            // dispatch action to set the symbol on display to num
+            dispatch(setSymbOnDis(getState().num))
         }
+
     } else {
         // throw an error
         console.error("addNumToCalc: Not a valid number provided. num: ", numberClicked);
@@ -22,7 +33,7 @@ const addNumToCalc = (numberClicked=0) => {
     
 } // addNumToCalc
 
-const addOpToCalc = (operator="none") => {
+export const addOpToCalc = (operator="none") => {
     // if operator is a valid string
     if (Object.prototype.toString.call(operator) === "[object String]") {
         return {
@@ -36,7 +47,7 @@ const addOpToCalc = (operator="none") => {
     
 } // addOpToCalc
 
-const updatePrevNum = (numToUpdate=0) => {
+export const updatePrevNum = (numToUpdate=0) => {
     
     // if numToAdd is a valid number
     if (numToUpdate || numToUpdate === 0) {
@@ -51,7 +62,7 @@ const updatePrevNum = (numToUpdate=0) => {
     
 } // updatePrevNum
 
-const setDotPresentInNum = (dotPresentInNum=false) => {
+export const setDotPresentInNum = (dotPresentInNum=false) => {
     // dotPresentInNum is a bool
     if(Object.prototype.toString.call(dotPresentInNum) === "[object Boolean]") {
         return {
@@ -64,20 +75,20 @@ const setDotPresentInNum = (dotPresentInNum=false) => {
     }
 } // setDotPresentInNum
 
-const setSymbOnDis = (symbol="") => ({
+export const setSymbOnDis = (symbol="") => ({
     type: ACTIONS.SET_SYMBOL_ON_DISPLAY,
     payload: symbol
 }) // setSymbOnDis
 
-const addToCurrentHis = (expression="") => ({
+export const addToCurrentHis = (expression="") => ({
     type: ACTIONS.ADD_TO_CURRENT_HISTORY,
     payload: expression
 }) // addToCurrentHis
 
-const updateCompleteHis = () => ({
+export const updateCompleteHis = () => ({
     type: ACTIONS.UPDATE_TO_COMPLETE_HISTORY
 }) // updateCompleteHis
 
-const removeLastFromCurrentHis = () => ({
+export const removeLastFromCurrentHis = () => ({
     type: ACTIONS.REMOVE_LAST_FROM_CURRENT_HISTORY
 }) // removeLastFromCurrentHis
