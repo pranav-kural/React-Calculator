@@ -10,9 +10,18 @@ const prevNum = (state=null, action) =>
     (action.type === Action.CALC_PREVIOUS_RESULT) ?
         action.payload : state;
 
-const num = (state=null, action) =>
-    (action.type === Action.ADD_NUM_TO_CALC) ?
-        action.payload : state;
+const num = (state=null, action) => {
+    switch (action.type) {
+        case Action.ADD_NUM_TO_CALC:
+            return action.payload
+        case Action.REMOVE_NUM_FROM_CALC:
+            let newNum = state.num;
+            newNum.pop();
+            return newNum;
+        default:
+            state
+    }
+}
 
 const symbOnDis = (state="", action) =>
     (action.type === Action.ADD_NUM_TO_CALC) ?
