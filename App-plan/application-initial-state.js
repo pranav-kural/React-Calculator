@@ -6,5 +6,6 @@ let initialState = {
     dotPresentInNum: false, // true is there is a dot present in the number being typed
     currentHis: [], //history of the ongoing calculation,
     completeHis: [], // history for the complete one user session
+    errors: [] // store errors
 }
 
