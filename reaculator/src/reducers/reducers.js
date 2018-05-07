@@ -24,7 +24,7 @@ const num = (state=null, action) => {
 }
 
 const symbOnDis = (state="", action) =>
-    (action.type === Action.ADD_NUM_TO_CALC) ?
+    (action.type === Action.SET_SYMBOL_ON_DISPLAY) ?
         action.payload : state;
 
 const dotPresentInNum = (state=false, action) =>

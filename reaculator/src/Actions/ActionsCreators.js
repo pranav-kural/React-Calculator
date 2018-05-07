@@ -63,3 +63,8 @@ const setDotPresentInNum = (dotPresentInNum=false) => {
         return {};
     }
 } // setDotPresentInNum
+
+const setSymbOnDis = (symbol="") => ({
+    type: ACTIONS.SET_SYMBOL_ON_DISPLAY,
+    payload: symbol
+})
