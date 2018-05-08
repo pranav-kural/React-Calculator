@@ -243,11 +243,7 @@ export const clearLastInput = () => (dispatch, getState) => {
             
             // set last symbol in currentHis (operator) on display
             dispatch(setSymbOnDis(getState().currentHis.slice(-1)[0]))
-            
-            dispatch({
-                type: ACTIONS.SET_CURRENT_CALC_OP,
-                payload: "none"
-            })
+
         }
         
     } else {
@@ -261,6 +257,7 @@ export const clearLastInput = () => (dispatch, getState) => {
         // Set the num on display
         dispatch(setSymbOnDis(getState().num))
         
+        // reset the calcOpSelected
         dispatch({
             type: ACTIONS.SET_CURRENT_CALC_OP,
             payload: "none"
@@ -316,7 +313,7 @@ export const calcResult = () => (dispatch, getState) => {
     (getState().symbOnDis !== getState().num) ? 
         getState().prevNum : 
         getCalculationResult(
-                getState().operator,
+                getState().calcOpSelected,
                 getState().num,
                 getState().prevNum
         );
