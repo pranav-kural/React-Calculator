@@ -110,3 +110,15 @@ clearCurrentCalc() -
     state.dotPresentInNum = false
     
 ------------------------------------------
+
+calcResult() - 
+
+    if (sod != num) {
+        return prevNum
+    } else {
+    
+        
+    }
+    
+    
+    
