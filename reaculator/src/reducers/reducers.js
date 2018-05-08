@@ -2,14 +2,14 @@ import { combineReducers } from 'redux'
 import Action from '../Actions/Constants'
 
 const calcOpSelected = (state="none", action) =>
-    (action.type === Action.ADD_OPERATOR_TO_CALC) ?
+    (action.type === Action.SET_CURRENT_CALC_OP) ?
         action.payload : state;
 
-const prevNum = (state=null, action) =>
-    (action.type === Action.CALC_PREVIOUS_RESULT) ?
+const prevNum = (state="", action) =>
+    (action.type === Action.SET_PREV_NUM) ?
         action.payload : state;
 
-const num = (state=[], action) => {
+const num = (state="", action) => {
     switch (action.type) {
         case Action.SET_NUM:
             return action.payload
@@ -20,7 +20,7 @@ const num = (state=[], action) => {
     }
 }
 
-const symbOnDis = (state="", action) =>
+const symbOnDis = (state="0", action) =>
     (action.type === Action.SET_SYMBOL_ON_DISPLAY) ?
         action.payload : state;
 

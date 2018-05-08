@@ -18,11 +18,11 @@ export const addNumToCalc = (numberClicked="") => (dispatch, getState) => {
             // dispatch action to set num
             dispatch({
                 type: ACTIONS.SET_NUM,
-                payload: [...getState().num, numberClicked]
+                payload: getState().num + numberClicked
             })
 
             // dispatch action to set the symbol on display to num
-            dispatch(setSymbOnDis(getState().num.join('')))
+            dispatch(setSymbOnDis(getState().num))
         }
 
     } else {
@@ -55,7 +55,7 @@ export const addOpToCalc = (operator="none") => (dispatch, getState) => {
                         getState().prevNum
                     ) :
                     // else, set it to the current value of num
-                    parseFloat(getState().num.join(''))
+                    parseFloat(getState().num)
             )
         )
 
@@ -65,7 +65,7 @@ export const addOpToCalc = (operator="none") => (dispatch, getState) => {
         // update current history
         dispatch(
             addToCurrentHis(
-                getState().num.join('')
+                getState().num
             )
         )
 
@@ -145,7 +145,7 @@ const setCalcOpSelected = (dispatch, operator) => {
 
     // set calcOpSelected
     dispatch({
-        type: ACTIONS.ADD_OPERATOR_TO_CALC,
+        type: ACTIONS.SET_CURRENT_CALC_OP,
         payload: operator
     })
 }
@@ -171,13 +171,13 @@ export const addDotToNum = () => (dispatch, getState) => {
         // add dot to num
         dispatch({
             type: ACTIONS.SET_NUM,
-            payload: [...getState.num, "."]
+            payload: getState.num + "."
         })
 
         // update the display
         dispatch(
             setSymbOnDis(
-                getState().num.join('')
+                getState().num
             )
         )
 
@@ -211,10 +211,124 @@ export const addToCurrentHis = (expression="") => ({
     payload: expression
 }) // addToCurrentHis
 
+export const clearLastInput = () => (dispatch, getState) => {
+    if (getState().symbOnDis === getState().num) {
+        
+        // remove last character from num
+        dispatch({
+            type: ACTIONS.SET_NUM,
+            payload: getState().num.split('').slice(0, -1)
+        })
+        
+        if (getState().num) {
+            
+            // set num on display
+            dispatch(setSymbOnDis(getState().num))
+            
+        } else {
+            
+            // set last symbol in currentHis (operator) on display
+            dispatch(setSymbOnDis(getState().currentHis.slice(-1)[0]))
+        }
+        
+    } else {
+        
+        // set num to the last number in currentHis
+        dispatch({
+            type: ACTIONS.SET_NUM,
+            payload: getState().currentHis.slice(-1)[0]
+        })
+        
+        // Set the num on display
+        dispatch(setSymbOnDis(getState().num))
+    }
+    
+    // remove last element from currentHis
+    dispatch({
+        type: ACTIONS.REMOVE_LAST_FROM_CURRENT_HISTORY
+    })
+    
+} // clearLastInput
+
 export const updateCompleteHis = () => ({
     type: ACTIONS.UPDATE_TO_COMPLETE_HISTORY
 }) // updateCompleteHis
 
-export const removeLastFromCurrentHis = () => ({
-    type: ACTIONS.REMOVE_LAST_FROM_CURRENT_HISTORY
-}) // removeLastFromCurrentHis
+export const clearCurrentCalc = () => (dispatch, getState) => {
+    
+    // clear current history
+    dispatch({
+        type: ACTIONS.CLEAR_CURRENT_CALCULATION
+    })
+    
+    // clear num
+    dispatch({
+        type: ACTIONS.CLEAR_NUM
+    })
+    
+    // reset display
+    dispatch(setSymbOnDis("0"))
+    
+    // clear prevNum
+    dispatch({
+        type: ACTIONS.SET_PREV_NUM,
+        payload: ""
+    })
+    
+    // reset calcOpSelected
+    dispatch({
+        type: ACTIONS.SET_CURRENT_CALC_OP,
+        payload: "none"
+    })
+    
+    // reset dotPresentInNum
+    dispatch(setDotPresentInNum(false))
+    
+} // clearCurrentCalc
+
+export const calcResult = () => (dispatch, getState) => {
+    
+    // calc final result
+    let finalResult = 
+    (getState().symbOnDis != getState().num) ? 
+        getState().prevNum : 
+        getCalculationResult(
+                getState().operator,
+                getState().num,
+                getState().prevNum
+        );
+    
+    // display the result
+    dispatch(setSymbOnDis(finalResult))
+        
+    // update complete history
+    dispatch({
+        type: ACTIONS.ADD_TO_COMPLETE_HISTORY,
+        payload: [...getState().currentHis, "=", finalResult]
+    })
+    
+    // clear current history
+    dispatch({
+        type: ACTIONS.CLEAR_CURRENT_CALCULATION
+    })
+    
+    // clear num
+    dispatch({
+        type: ACTIONS.CLEAR_NUM
+    })
+    
+    // clear prevNum
+    dispatch({
+        type: ACTIONS.SET_PREV_NUM,
+        payload: ""
+    })
+    
+    // reset calcOpSelected
+    dispatch({
+        type: ACTIONS.SET_CURRENT_CALC_OP,
+        payload: "none"
+    })
+    
+    // reset dotPresentInNum
+    dispatch(setDotPresentInNum(false))
+}
